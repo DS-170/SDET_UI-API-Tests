@@ -1,35 +1,44 @@
 package api.requests;
 
-import api.pojo.Entity;
+import io.qameta.allure.Step;
 import io.restassured.response.Response;
-
-import java.util.ArrayList;
-import java.util.Arrays;
 
 import static io.restassured.RestAssured.baseURI;
 import static io.restassured.RestAssured.given;
 
 public class GetRequest extends BaseRequest {
+    private static final int STATUS_CODE = 200;
 
-    public static Response getEntityById(int id) {
-        ArrayList<Integer> integers = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5));
-
-        Entity entity = Entity.builder()
-                .title("Test title")
-                .verified(true)
-                .important_numbers(integers)
-                .addition(Entity.Addition.builder()
-                        .additional_info("Test additional info")
-                        .additional_number(1)
-                        .build())
-                .build();
-
+    @Step("Запрос: /get/{id}")
+    public static Response getEntityById(String id) {
         return given()
                 .spec(baseRequest)
-                .body(entity)
                 .when()
-                .post(baseURI + "/api/get/" + id)
+                .get(baseURI + "/get/" + id)
+                .then()
+                .statusCode(STATUS_CODE)
+                .extract().response();
+    }
+
+    @Step("Запрос: /get/{id} без проверки статускода")
+    public static Response getEntityByIdNoStatusCheck(String id) {
+        return given()
+                .spec(baseRequest)
+                .when()
+                .get(baseURI + "/get/" + id)
                 .then()
                 .extract().response();
+    }
+
+    @Step("Запрос: /getAll")
+    public static Response getEntityAll() {
+        return given()
+                .spec(baseRequest)
+                .when()
+                .get(baseURI + "/getAll")
+                .then()
+                .statusCode(STATUS_CODE)
+                .extract()
+                .response();
     }
 }
