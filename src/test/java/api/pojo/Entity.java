@@ -12,7 +12,6 @@ import java.util.Arrays;
 @Setter
 @Builder
 public class Entity {
-    private static final ArrayList<Integer> integers = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5));
 
     @Builder.Default
     private String title = "Test title";
@@ -20,7 +19,7 @@ public class Entity {
     private Boolean verified = true;
     @Builder.Default
     @SerializedName(value = "important_numbers")
-    private ArrayList<Integer> importantNumbers = integers;
+    private ArrayList<Integer> importantNumbers = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5));
     private Addition addition;
 
     @Getter

@@ -20,12 +20,11 @@ import static org.hamcrest.Matchers.equalTo;
 
 @Feature("API: Проверка Patch запросов")
 public class PatchTest {
-    private static final ArrayList<Integer> newIntegers = new ArrayList<>(Arrays.asList(3, 2, 2));
 
-    private static final Entity entityToEdite = Entity.builder()
+    private static Entity entityToEdite = Entity.builder()
             .title("Edited title")
             .verified(false)
-            .importantNumbers(newIntegers)
+            .importantNumbers(new ArrayList<>(Arrays.asList(3, 2, 3)))
             .addition(Entity.Addition.builder()
                     .additionalInfo("Edited additional info")
                     .additionalNumber(2)
@@ -37,7 +36,6 @@ public class PatchTest {
     public void setUp() {
         Response createResponse = CreateRequest.createEntity(entityToEdite);
         id = createResponse.getBody().asString();
-        UpdateRequest.updateEntityById(id, entityToEdite);
     }
 
     @AfterEach
@@ -48,6 +46,8 @@ public class PatchTest {
     @Test
     @Story("Patch запрос по ID")
     public void patchByIdTest() {
+        UpdateRequest.updateEntityById(id, entityToEdite);
+
         given()
                 .when()
                 .get(baseURI + "/get/" + id)

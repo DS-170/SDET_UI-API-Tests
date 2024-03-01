@@ -18,15 +18,11 @@ import java.util.List;
 @Feature("API: Проверка Get запросов")
 public class GetTest {
     private String id;
-    private Response getResponseId;
-    private List<Entity> entityList;
 
     @BeforeEach
     public void setUp() {
         Response createResponse = CreateRequest.createEntity(Entity.builder().build());
         id = createResponse.getBody().asString();
-        getResponseId = GetRequest.getEntityById(id);
-        entityList = GetRequest.getEntityAll().jsonPath().getList("entity", Entity.class);
     }
 
     @AfterEach
@@ -37,12 +33,16 @@ public class GetTest {
     @Test
     @Story("Get запрос по ID")
     public void apiGetByIdTest() {
+        Response getResponseId = GetRequest.getEntityById(id);
+
         Assertions.assertEquals(id, getResponseId.path("id").toString());
     }
 
     @Test
     @Story("Get запрос всех сущностей")
     public void apiGetAllTest() {
+        List<Entity> entityList = GetRequest.getEntityAll().jsonPath().getList("entity", Entity.class);
+
         Assertions.assertTrue(entityList.size() > 0);
     }
 }
