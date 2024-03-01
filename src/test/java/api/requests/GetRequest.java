@@ -20,17 +20,6 @@ public class GetRequest extends BaseRequest {
                 .extract().response();
     }
 
-    @Step("Запрос: /get/{id} без проверки статускода")
-    public static Response getEntityByIdNoStatusCheck(String id) {
-        return given()
-                .spec(baseRequest)
-                .when()
-                .get(baseURI + "/get/" + id)
-                .then()
-                .statusCode(STATUS_CODE)
-                .extract().response();
-    }
-
     @Step("Запрос: /getAll")
     public static Response getEntityAll() {
         return given()

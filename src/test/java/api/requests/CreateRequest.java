@@ -8,7 +8,6 @@ import static io.restassured.RestAssured.baseURI;
 import static io.restassured.RestAssured.given;
 
 public class CreateRequest extends BaseRequest {
-    private static final int STATUS_CODE = 200;
 
     @Step("Запрос: /create (1)")
     public static Response createEntity(Entity entity) {
@@ -17,16 +16,5 @@ public class CreateRequest extends BaseRequest {
                 .body(entity)
                 .when()
                 .post(baseURI + "/create");
-    }
-
-    @Step("Запрос: /create (2)")
-    public static Response createEntity() {
-        return given()
-                .spec(baseRequest)
-                .body(baseEntity)
-                .when()
-                .post(baseURI + "/create")
-                .then()
-                .extract().response();
     }
 }

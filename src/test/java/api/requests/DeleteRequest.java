@@ -7,7 +7,6 @@ import static io.restassured.RestAssured.baseURI;
 import static io.restassured.RestAssured.given;
 
 public class DeleteRequest extends BaseRequest {
-    private static final int STATUS_CODE = 204;
 
     @Step("Запрос: /delete/{id}")
     public static Response deleteEntityByID(String id) {
