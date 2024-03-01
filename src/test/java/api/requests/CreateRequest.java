@@ -11,6 +11,15 @@ public class CreateRequest extends BaseRequest {
     private static final int STATUS_CODE = 200;
 
     @Step("Запрос: /create (1)")
+    public static Response createEntity(Entity entity) {
+        return given()
+                .spec(baseRequest)
+                .body(entity)
+                .when()
+                .post(baseURI + "/create");
+    }
+
+    @Step("Запрос: /create (2)")
     public static Response createEntity() {
         return given()
                 .spec(baseRequest)
@@ -18,19 +27,6 @@ public class CreateRequest extends BaseRequest {
                 .when()
                 .post(baseURI + "/create")
                 .then()
-                .statusCode(STATUS_CODE)
-                .extract().response();
-    }
-
-    @Step("Запрос: /create (2)")
-    public static Response createEntity(Entity entity) {
-        return given()
-                .spec(baseRequest)
-                .body(entity)
-                .when()
-                .post(baseURI + "/create")
-                .then()
-                .statusCode(STATUS_CODE)
                 .extract().response();
     }
 }

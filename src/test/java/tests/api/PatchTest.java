@@ -23,10 +23,10 @@ public class PatchTest extends BaseTest {
     private static Entity entityToEdite = Entity.builder()
             .title("Edited title")
             .verified(false)
-            .important_numbers(newIntegers)
+            .importantNumbers(newIntegers)
             .addition(Entity.Addition.builder()
-                    .additional_info("Edited additional info")
-                    .additional_number(2)
+                    .additionalInfo("Edited additional info")
+                    .additionalNumber(2)
                     .build())
             .build();
 
@@ -43,10 +43,10 @@ public class PatchTest extends BaseTest {
                 .get(baseURI + "/get/" + id)
                 .then()
                 .body(
-                        "important_numbers", equalTo(entityToEdite.getImportant_numbers()),
+                        "important_numbers", equalTo(entityToEdite.getImportantNumbers()),
                         "title", equalTo(entityToEdite.getTitle()),
                         "verified", equalTo(entityToEdite.getVerified()),
-                        "addition.additional_info", equalTo(entityToEdite.getAddition().getAdditional_info())
+                        "addition.additional_info", equalTo(entityToEdite.getAddition().getAdditionalInfo())
                 );
     }
 }

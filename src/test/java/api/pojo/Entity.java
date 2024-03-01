@@ -1,14 +1,11 @@
 package api.pojo;
 
+import com.google.gson.annotations.SerializedName;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.ArrayList;
-
-/*
-* Я очень долго боролся с тем что lombok и JsonAlias вместе не работают, не смог найти ответа
-*/
 
 @Getter
 @Setter
@@ -16,14 +13,17 @@ import java.util.ArrayList;
 public class Entity {
     private String title;
     private Boolean verified;
-    private ArrayList<Integer> important_numbers;
+    @SerializedName(value = "important_numbers")
+    private ArrayList<Integer> importantNumbers;
     private Addition addition;
 
     @Getter
     @Setter
     @Builder
     public static class Addition {
-        private String additional_info;
-        private Integer additional_number;
+        @SerializedName(value = "additional_info")
+        private String additionalInfo;
+        @SerializedName(value = "additional_number")
+        private Integer additionalNumber;
     }
 }

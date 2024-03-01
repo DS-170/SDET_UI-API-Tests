@@ -13,11 +13,11 @@ import java.util.Arrays;
 import static io.restassured.RestAssured.given;
 
 public class BaseRequest {
-    public static Entity baseEntity;
-    static ArrayList<Integer> integers = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5));
     public static RequestSpecification baseRequest =
             given()
                     .contentType(ContentType.JSON);
+    static Entity baseEntity;
+    public static ArrayList<Integer> integers = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5));
 
     static {
         RestAssured.baseURI = ConfPropertiesReader.getProperty("API_URL");
@@ -25,10 +25,10 @@ public class BaseRequest {
         baseEntity = Entity.builder()
                 .title("Test title")
                 .verified(true)
-                .important_numbers(integers)
+                .importantNumbers(integers)
                 .addition(Entity.Addition.builder()
-                        .additional_info("Test additional info")
-                        .additional_number(1)
+                        .additionalInfo("Test additional info")
+                        .additionalNumber(1)
                         .build())
                 .build();
     }

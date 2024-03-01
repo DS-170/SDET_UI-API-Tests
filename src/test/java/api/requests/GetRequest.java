@@ -27,6 +27,7 @@ public class GetRequest extends BaseRequest {
                 .when()
                 .get(baseURI + "/get/" + id)
                 .then()
+                .statusCode(STATUS_CODE)
                 .extract().response();
     }
 

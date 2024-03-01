@@ -8,6 +8,7 @@ import static io.restassured.RestAssured.given;
 
 public class DeleteRequest extends BaseRequest {
     private static final int STATUS_CODE = 204;
+
     @Step("Запрос: /delete/{id}")
     public static Response deleteEntityByID(String id) {
         return given()
@@ -15,7 +16,6 @@ public class DeleteRequest extends BaseRequest {
                 .when()
                 .delete(baseURI + "/delete/" + id)
                 .then()
-                .statusCode(STATUS_CODE)
                 .extract().response();
     }
 }

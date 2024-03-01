@@ -34,6 +34,6 @@ public class GetTest extends BaseTest {
     public void apiGetAll() {
         List<Entity> entityList = getAllResponse.jsonPath().getList("entity", Entity.class);
 
-        Assertions.assertFalse(entityList.isEmpty());
+        Assertions.assertTrue(entityList.size() > 0);
     }
 }

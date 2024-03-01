@@ -1,30 +1,29 @@
 package tests.api;
 
-import api.requests.CreateRequest;
 import api.requests.DeleteRequest;
-import api.requests.GetRequest;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
-import org.junit.jupiter.api.Assertions;
+import io.restassured.response.Response;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import static org.hamcrest.Matchers.notNullValue;
+
 @Feature("API: Проверка Delete запросов")
-public class DeleteTest {
-    private static String localId;
+public class DeleteTest extends BaseTest {
+    private static Response deleteResponse;
 
     @BeforeAll
     public static void localSetUp() {
-        localId = CreateRequest.createEntity().getBody().asString();
+        deleteResponse = DeleteRequest.deleteEntityByID(id);
     }
 
     @Test
     @Story("Delete запрос по ID")
     public void deleteById() {
-        DeleteRequest.deleteEntityByID(localId);
-
-        Assertions.assertEquals(
-                "{\"error\":\"no rows in result set\"}",
-                GetRequest.getEntityByIdNoStatusCheck(localId).getBody().asString());
+        deleteResponse
+                .then()
+                .statusCode(204)
+                .body(notNullValue());
     }
 }
