@@ -13,8 +13,6 @@ import ui.pages.ListPage;
 public class BaseTest {
     protected final String pageAddress = ConfPropertiesReader.getProperty("mainpage_URL");
     protected final By appLogo = By.xpath(ConfPropertiesReader.getProperty("app_logo"));
-    protected AddCustPage addCustPage;
-    protected ListPage listPage;
     protected WebDriver driver;
     Waiting wait;
 
@@ -22,8 +20,6 @@ public class BaseTest {
     public void setUp() {
         driver = new ChromeDriver();
         driver.manage().window().maximize();
-        addCustPage = new AddCustPage(driver);
-        listPage = new ListPage(driver);
         driver.get(pageAddress);
         wait = new Waiting(driver);
         wait.waitForVisibility(appLogo);

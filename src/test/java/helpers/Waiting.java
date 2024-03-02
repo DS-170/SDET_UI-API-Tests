@@ -22,6 +22,11 @@ public class Waiting {
                 .until(ExpectedConditions.visibilityOfElementLocated(element));
     }
 
+    public void waitForVisibility(WebElement element) {
+        new WebDriverWait(driver, Duration.ofSeconds(TIMEOUT_SECONDS))
+                .until(ExpectedConditions.visibilityOf(element));
+    }
+
     public WebElement waitForClickable(By element) {
         return new WebDriverWait(driver, Duration.ofSeconds(TIMEOUT_SECONDS))
                 .until(ExpectedConditions.elementToBeClickable(element));

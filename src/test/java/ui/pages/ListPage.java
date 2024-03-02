@@ -5,16 +5,21 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ListPage extends BasePage {
-    public final By firstNameColumn = By.xpath("//a[contains(text(), 'First Name')]");
-    private final By customerTable = By.xpath("//table[@class='table table-bordered table-striped']");
+    public final By firstNameColumn = By.xpath("/html/body/div/div/div[2]/div/div[2]/div/div/table/thead/tr/td[1]/a");
 
     public ListPage(WebDriver driver) {
         super(driver);
+    }
+
+    private List<WebElement> getRows() {
+        WebElement table = driver.findElement(By.xpath("//table[@class='table table-bordered table-striped']"));
+        wait.waitForVisibility(table);
+        return table.findElements(By.xpath(".//tbody//tr"));
     }
 
     @Step("Сортировка по полю First Name")
@@ -34,25 +39,23 @@ public class ListPage extends BasePage {
 
     @Step("Получение имени для удаления")
     public WebElement getName() {
-        wait.waitForVisibility(customerTable);
-        WebElement table = driver.findElement(customerTable);
-
-        List<WebElement> rows = table.findElements(By.xpath(".//tbody//tr"));
-        ArrayList<String> names = new ArrayList<>();
-
-        for (var row : rows) {
-            WebElement firstNameElement = row.findElement(By.xpath(".//td[1]"));
-            names.add(firstNameElement.getText());
-        }
+        List<String> names = getFNameList();
 
         double averageLength = names.stream()
                 .mapToInt(String::length)
                 .average()
                 .orElse(0.0);
 
-        return rows.stream()
+        return getRows().stream()
                 .min(Comparator.comparingDouble(name ->
                         Math.abs(name.getText().length() - averageLength)))
                 .orElse(null);
+    }
+
+    @Step("Получение списка пользователей")
+    public List<String> getFNameList() {
+        return getRows().stream()
+                .map(row -> row.findElement(By.xpath(".//td[1]")).getText())
+                .collect(Collectors.toList());
     }
 }

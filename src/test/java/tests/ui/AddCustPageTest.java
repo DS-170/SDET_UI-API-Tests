@@ -5,8 +5,10 @@ import helpers.GeneratingHelper;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
+import ui.pages.AddCustPage;
 
 @Feature("Тест создания нового пользователя")
 public class AddCustPageTest extends BaseTest {
@@ -16,6 +18,12 @@ public class AddCustPageTest extends BaseTest {
     private final By submitBtn = By.xpath("//button[@class='btn btn-default' and contains(text(), 'Add Customer')]");
     private final String lastName = ConfPropertiesReader.getProperty("lastname");
     private final String postCode = GeneratingHelper.generatedPostCode();
+    private AddCustPage addCustPage;
+
+    @BeforeEach
+    public void localSetUp() {
+        addCustPage = new AddCustPage(driver);
+    }
 
     @Test
     @Story("Кейс успешного добавления пользователя")
